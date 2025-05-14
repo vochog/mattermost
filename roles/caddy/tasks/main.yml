@@ -1,0 +1,9 @@
+- name: Copy Caddyfile
+  template:
+    src: Caddyfile.j2
+    dest: /opt/mattermost/Caddyfile
+
+- name: Restart Caddy
+  command: docker-compose restart caddy
+  args:
+    chdir: /opt/mattermost
