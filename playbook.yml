@@ -1,0 +1,14 @@
+- name: Deploy Mattermost stack using Docker
+  hosts: all
+  become: true
+
+  vars:
+    turn_domain: turn.example.com
+    turn_user: turnuser
+    turn_pass: turnpassword
+
+  roles:
+    - docker
+    - mattermost
+    - coturn
+    - caddy
