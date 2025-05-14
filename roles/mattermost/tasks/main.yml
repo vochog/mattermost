@@ -1,0 +1,20 @@
+- name: Create Mattermost directory
+  file:
+    path: /opt/mattermost/mattermost
+    state: directory
+    recurse: true
+
+- name: Copy Dockerfile for Mattermost
+  template:
+    src: Dockerfile.j2
+    dest: /opt/mattermost/mattermost/Dockerfile
+
+- name: Copy docker-compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/mattermost/docker-compose.yml
+
+- name: Start Mattermost stack
+  command: docker-compose up -d
+  args:
+    chdir: /opt/mattermost
