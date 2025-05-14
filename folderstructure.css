@@ -1,0 +1,21 @@
+mattermost-docker-ansible/
+├── inventory.ini
+├── playbook.yml
+├── roles/
+│   ├── docker/
+│   │   └── tasks/
+│   │       └── main.yml
+│   ├── mattermost/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   │   └── templates/
+│   │       ├── Dockerfile.j2
+│   │       └── docker-compose.yml.j2
+│   ├── coturn/
+│   │   └── tasks/
+│   │       └── main.yml
+│   ├── caddy/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   │   └── templates/
+│   │       └── Caddyfile.j2
