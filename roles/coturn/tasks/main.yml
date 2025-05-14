@@ -1,0 +1,5 @@
+# Coturn is started via docker-compose
+- name: Ensure Coturn container is up
+  command: docker-compose up -d coturn
+  args:
+    chdir: /opt/mattermost
