@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  mattermost:
+    build:
+      context: ./mattermost
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=mattermost
+      - DB_USER=mmuser
+      - DB_PASSWORD=mmuserpassword
+    depends_on:
+      - db
+    ports:
+      - "8065:8065"
+    volumes:
+      - mattermost_data:/opt/mattermost/data
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: mattermost
+      POSTGRES_USER: mmuser
+      POSTGRES_PASSWORD: mmuserpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  coturn:
+    image: instrumentisto/coturn
+    restart: always
+    ports:
+      - "3478:3478"
+      - "5349:5349"
+    environment:
+      - TURN_REALM={{ turn_domain }}
+      - TURN_USER={{ turn_user }}
+      - TURN_PASS={{ turn_pass }}
+
+  caddy:
+    image: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  mattermost_data:
+  postgres_data:
+  caddy_data:
+  caddy_config:
