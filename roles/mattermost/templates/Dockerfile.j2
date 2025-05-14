@@ -1,0 +1,18 @@
+FROM debian:12
+
+ENV MM_VERSION=9.7.1
+
+RUN apt-get update && \
+    apt-get install -y curl wget gnupg2 unzip libpq-dev && \
+    curl -O https://releases.mattermost.com/${MM_VERSION}/mattermost-${MM_VERSION}-linux-amd64.tar.gz && \
+    tar -xvzf mattermost-${MM_VERSION}-linux-amd64.tar.gz && \
+    mv mattermost /opt && \
+    useradd --system --user-group mattermost && \
+    mkdir /opt/mattermost/data && \
+    chown -R mattermost:mattermost /opt/mattermost
+
+EXPOSE 8065
+WORKDIR /opt/mattermost
+USER mattermost
+
+CMD ["/opt/mattermost/bin/mattermost"]
